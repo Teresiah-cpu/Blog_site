@@ -24,7 +24,7 @@ def login():
         else:
             flash('Email does not exist.', category='error')
 
-    return render_template("login.html")
+    return render_template("login.html", user=current_user)
 
 
 @auth.route("/sign-up", methods=['GET', 'POST'])
@@ -52,14 +52,14 @@ def sign_up():
             flash("Email is invalid.", category='error')
         else:
             new_user = User(email=email, username=username, password=generate_password_hash(
-                password1, method='sha256')) #encryption method
+                password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
             flash('User created!')
             return redirect(url_for('views.home'))
 
-    return render_template("signup.html")
+    return render_template("signup.html", user=current_user)
 
 
 @auth.route("/logout")
