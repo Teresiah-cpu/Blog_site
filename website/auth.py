@@ -52,7 +52,7 @@ def sign_up():
             flash("Email is invalid.", category='error')
         else:
             new_user = User(email=email, username=username, password=generate_password_hash(
-                password1, method='tesh254')) #encryption method
+                password1, method='sha256')) #encryption method
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
